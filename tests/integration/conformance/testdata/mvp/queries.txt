@@ -1,0 +1,146 @@
+# MVP single-event query fixtures. Each query must match Python EQL output.
+process where true
+process where false
+process where process_name == "cmd.exe"
+process where process_name == "CMD.EXE"
+process where process_name != "cmd.exe"
+process where true | head 2
+process where true | filter serial_event_id >= 4 | head 2
+process where true | unique pid > 0
+process where true | tail 2
+process where true | head 3 | tail 1
+process where true | tail 2 | head 1
+process where true | sort pid
+process where true | sort pid | tail 2
+process where true | sort parent_process_name, pid
+process where true | count
+process where true | count process_name
+process where true | count process_name | tail 1
+generic where true | count
+generic where true | count hostname
+process where true | unique_count process_name
+process where true | unique_count pid > 0
+process where true | count process_name | unique_count key
+generic where true | unique_count hostname
+process where true and process_name == "cmd.exe"
+process where false or process_name == "cmd.exe"
+process where 7 / 3 == 2
+process where (3 + 4 - 5 * 6 / 7) == 3
+process where "Foo" == "foo"
+process where process_name in ("cmd.exe", "powershell.exe")
+process where process_name not in ("cmd.exe", "powershell.exe")
+process where process_name in (parent_process_name, "cmd.exe")
+process where process_name not in (parent_process_name, "cmd.exe")
+process where length(process_name) == 7
+process where length(items) == 1
+process where length(nested) == 1
+process where length(missing) == null
+process where wildcard(process_name, "CMD*")
+process where wildcard(process_name, "power*", "rundll*")
+process where startsWith(process_name, "CMD")
+process where endsWith(process_name, ".exe")
+process where stringContains(command_line, "whoami")
+process where match(command_line, ?'.*?whoami')
+process where match("cmd.*", process_name)
+process where matchLite(command_line, ?'.*?POWERSHELL\s+-NOP')
+process where matchLite("cmd.*", process_name)
+process where match(command_line, ?'.*?missing')
+process where match(missing, ?'.*')
+process where string(null) == null
+process where string(1) == "1"
+process where string(true) == "true"
+process where number("314") == 314
+process where number("3.14") == 3.14
+process where number("0x32", 16) == 50
+process where number("32", 16) == 50
+process where number("bad") == null
+process where concat("a", "||", 1, "||", true, "||", "b") == "a||1||true||b"
+process where concat(null) == null
+process where add(pid, 5) == 15
+process where subtract(pid, -5) == 15
+process where multiply(6, pid) == 60
+process where divide(30, 4.0) == 7.5
+process where modulo(11, add(pid, 1)) == 0
+process where divide(pid, 0) == null
+registry where arrayContains(bytes_written_string_list, 'En-uS')
+registry where arrayContains(bytes_written_string_list, 'missing')
+registry where arrayContains(bytes_written_string_list, "missing", "en-US")
+registry where arrayContains(numbers, 2.0)
+registry where arrayContains(numbers, "2")
+registry where arrayContains(missing, "en-US")
+registry where arrayContains(missing, "en-US") == null
+process where arrayContains(process_name, "c")
+process where arrayContains(nested, "value")
+file where indexOf(file_name, 'plore') == 2
+file where indexOf(file_name, '.pf') == null
+file where indexOf(file_name, 'plorer.', 4) == null
+file where substring(file_name, 0, 4) == 'expl'
+file where substring(file_name, -4) == '.exe'
+file where substring(file_name, -4, -1) == '.ex'
+process where between(process_name, "s", "e") == "yst"
+process where between(process_name, "s", "e", true) == "ystem Idle Proc"
+process where between("abc", "a", "b", null) == ""
+process where between(process_name, "s", "e", pid) == "ystem Idle Proc"
+process where length(between(process_name, 'g', 'z')) == null
+network where cidrMatch(source_address, "10.6.48.157/8")
+network where cidrMatch(source_address, "192.168.0.0/16")
+network where cidrMatch(source_address, "192.168.0.0/16", "10.6.48.157/8")
+file where serial_event_id - 1 == 7
+file where serial_event_id + 1 == 9
+file where serial_event_id * 2 == 16
+file where serial_event_id / 2 == 1
+file where serial_event_id / 2.0 == 4
+file where serial_event_id % 5 == 3
+registry where arraySearch(bytes_written_string_list, a, a == 'en-US')
+registry where arraySearch(bytes_written_string_list, a, endsWith(a, '-us'))
+network where mysterious_field and arraySearch(mysterious_field.subarray, s, true)
+network where mysterious_field and arraySearch(mysterious_field.subarray, s, false)
+network where mysterious_field and arraySearch(mysterious_field.subarray, s, s.a == 's0-*')
+network where mysterious_field and arraySearch(mysterious_field.subarray, s, s.a != 's0-*')
+network where mysterious_field and arraySearch(mysterious_field.subarray, sub1, arraySearch(sub1.c, nested, nested.x.y == '*'))
+network where mysterious_field and arraySearch(mysterious_field.subarray, sub1, sub1.a == 's0-a' and arraySearch(sub1.c, nested, nested.z == sub1.cross_match))
+network where mysterious_field and arraySearch(mysterious_field.subarray, sub1, arraySearch(sub1.c, nested, nested.x.y == mysterious_field.outer_cross_match))
+registry where arrayCount(bytes_written_string_list, s, s == '*-us') == 1
+registry where arrayCount(bytes_written_string_list, s, s == '*en*') == 2
+network where safe(divide(process_name, process_name))
+process where process_name == "cmd*"
+process where process_name != "cmd*"
+process where "cmd*" == process_name
+process where "cmd*" != process_name
+file where file_path == "*cmd.exe"
+file where file_path != "*cmd.exe"
+process where missing == null
+process where missing != null
+process where missing > 1
+process where missing in ("x")
+process where missing not in ("x")
+process where pid >= 10 and pid < 20
+process where pid in (10, 20)
+process where pid not in (10, 20)
+process where pid in (10,)
+process where pid in ("10")
+process where not (process_name == "powershell.exe")
+process where process_name
+process where null
+process where true in (true)
+process where true not in (true)
+process where false or pid == 10
+process where null or false
+process where null and true
+process where not null
+file where file_name:length() == 12
+process where command_line:stringContains("whoami")
+process where child of [process where process_name == "cmd.exe"]
+process where descendant of [process where process_name == "cmd.exe"]
+process where pid == 10 and /* ignored */ process_name == "cmd.exe"
+process where pid
+process where zero
+process where nested.value == 7
+process where items[0] == "a"
+process where items[2] == null
+process where empty_items
+file where pid == 10
+process where pid == 10.0
+process where pid == "10"
+process where process_name == 10
+generic where hostname == "host-a"

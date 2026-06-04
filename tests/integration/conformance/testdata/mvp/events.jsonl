@@ -1,0 +1,9 @@
+{"serial_event_id":1,"event_type":"process","process_name":"cmd.exe","parent_process_name":"explorer.exe","command_line":"C:/Windows/System32/cmd.exe /c whoami","pid":10,"ppid":4,"subtype":"create","timestamp":100,"nested":{"value":7},"items":["a"],"empty_items":[],"zero":0}
+{"serial_event_id":2,"event_type":"process","process_name":"PowerShell.EXE","parent_process_name":"powershell.exe","command_line":"powershell -nop","pid":20,"ppid":10,"subtype":"create","timestamp":200}
+{"serial_event_id":3,"event_type":"file","file_name":"cmd.exe","file_path":"C:/Windows/System32/cmd.exe","pid":10,"timestamp":300}
+{"serial_event_id":4,"event_type_full":"process_event","process_name":"rundll32.exe","parent_process_name":"PowerShell.EXE","command_line":"rundll32.exe shell32.dll","pid":0,"ppid":20,"subtype":"create","timestamp":400}
+{"serial_event_id":5,"hostname":"host-a","timestamp":500}
+{"serial_event_id":6,"event_type":"registry","bytes_written_string_list":["EN-us","EN"],"numbers":[1,2],"timestamp":600}
+{"serial_event_id":7,"event_type":"process","process_name":"System Idle Process","parent_process_name":"idle","command_line":"System Idle Process","pid":4,"ppid":0,"subtype":"create","timestamp":700}
+{"serial_event_id":8,"event_type":"file","file_name":"explorer.exe","file_path":"C:/dev/TestLogs/something.json","pid":4,"timestamp":800}
+{"serial_event_id":9,"event_type":"network","source_address":"10.6.48.157","mysterious_field":{"outer_cross_match":"*","subarray":[{"a":"s0-a","cross_match":"s0-c1-x-z","c":[{"x":{"y":"*"},"z":"s0-c1-x-z"},{"x":{"y":"no"},"z":"other"}]},{"a":"s1-a","cross_match":"missing","c":[{"x":{"y":"none"},"z":"none"}]}]},"timestamp":900}
